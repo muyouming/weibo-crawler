@@ -232,7 +232,10 @@ class Weibo(object):
     def get_json(self, params):
         """获取网页中json数据"""
         url = "https://m.weibo.cn/api/container/getIndex?"
-        r = requests.get(url, params=params, headers=self.headers, verify=False)
+        proxies = self.getProxy()
+        logger.debug("[DEBUG] getting " + url+str(params) + "   from proxy:  " +proxies.get('http'))
+
+        r = requests.get(url, params=params,proxies=proxies, headers=self.headers, verify=False)
         return r.json(), r.status_code
 
     def get_weibo_json(self, page):
@@ -437,6 +440,7 @@ class Weibo(object):
         for i in range(5):
             url = "https://m.weibo.cn/detail/%s" % id
             proxies = self.getProxy()
+            logger.debug("[DEBUG] getting " + url + "   from proxy:  " +proxies.get('http'))
             html = requests.get(url, headers=self.headers,proxies=proxies, verify=False).text
             html = html[html.find('"status":') :]
             html = html[: html.rfind('"call"')]
@@ -945,6 +949,7 @@ class Weibo(object):
             params["max_id"] = max_id
         url = "https://m.weibo.cn/comments/hotflow?max_id_type=0"
         proxies = self.getProxy()
+        logger.debug("[DEBUG] getting " + url + "   from proxy:  " +proxies.get('http'))
         req = requests.get(
             url,
             params=params,proxies=proxies,
@@ -1010,6 +1015,7 @@ class Weibo(object):
             id=id, page=page
         )
         proxies = self.getProxy()
+        logger.debug("[DEBUG] getting " + url + "   from proxy:  " +proxies.get('http'))
         req = requests.get(url,proxies=proxies)
         json = None
         try:
@@ -1064,6 +1070,7 @@ class Weibo(object):
         url = "https://m.weibo.cn/api/statuses/repostTimeline"
         params = {"id": id, "page": page}
         proxies = self.getProxy()
+        logger.debug("[DEBUG] getting " + url+str(params) + "   from proxy:  " +proxies.get('http'))
         req = requests.get(
             url,
             params=params,proxies=proxies,
