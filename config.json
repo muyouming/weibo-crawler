@@ -24,5 +24,6 @@
         "password": "123456",
         "charset": "utf8mb4"
     },
-    "mongodb_URI": "mongodb://[username:password@]host[:port][/[defaultauthdb][?options]]"
+    "mongodb_URI": "mongodb://[username:password@]host[:port][/[defaultauthdb][?options]]",
+    "proxy_server":"http://192.168.3.16:5555/random"
 }
